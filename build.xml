@@ -1,4 +1,4 @@
-<project >
+<project default = "createZip">
 
     <property name="src.dir" value="D:/projects/expression-evaluator/src"/>
     <property name="cobertura.dir" value="./dependencies\cobertura-2.0.1" />
