@@ -1,0 +1,136 @@
+<project >
+
+    <property name="src.dir" value="D:/projects/expression-evaluator/src"/>
+    <property name="cobertura.dir" value="./dependencies\cobertura-2.0.1" />
+
+
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura.dir}">
+            <include name="cobertura-2.0.1.jar" />
+            <include name="lib/**/*.jar" />
+        </fileset>
+    </path>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+    <target name="init">
+        <mkdir dir="build"/>
+        <mkdir dir="build/codeCoverage"/>
+        <mkdir dir="build/codeCoverage/instrumented" />
+        <mkdir dir="build/codeCoverage/reports"/>
+        <mkdir dir="build/codeCoverage/reports/junit-xml" />
+        <mkdir dir="build/codeCoverage/reports/junit-html" />
+        <mkdir dir="build/codeCoverage/coverage"/>
+        <mkdir dir="build/codeCoverage/coverage/cobertura-xml" />
+        <mkdir dir="build/codeCoverage/coverage/cobertura-summary-xml" />
+        <mkdir dir="build/codeCoverage/coverage/cobertura-html" />
+    </target>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+
+
+    <target name="compile" depends="init" >
+        <mkdir dir="build/classes"/>
+        <mkdir dir="build/classes/src"/>
+        <javac srcdir="src" destdir="build/classes/src" includeantruntime="false" debug="yes"/>
+    </target>
+
+
+
+    <target name="compileTest" depends="compile" >
+        <mkdir dir="build/classes/test"/>
+        <javac srcdir="Test" destdir="build/classes/test" classpath="build/classes/src;dependencies/junit-4.10.jar" includeantruntime="false" debug="yes"/>
+    </target>
+
+    <target name="instrument" >
+        <delete file="cobertura.ser"/>
+        <delete dir="build/codeCoverage/instrumented" />
+
+        <cobertura-instrument todir="build/codeCoverage/instrumented">
+
+            <ignore regex="org.apache.log4j.*" />
+
+            <fileset dir="build/classes/src">
+                <include name="**/*.class" />
+            </fileset>
+        </cobertura-instrument>
+    </target>
+
+
+
+    <target name="test" depends="compileTest">
+        <junit fork="yes" printsummary="on"  haltonfailure="yes" failureProperty="test.failed" dir="." >
+            <classpath location="build/codeCoverage/instrumented" />
+            <classpath location="build/classes/src" />
+            <classpath location="build/classes/test" />
+            <classpath location="dependencies/junit-4.10.jar"/>
+
+            <classpath refid="cobertura.classpath" />
+
+            <formatter type="xml" />
+            <test name="${testcase}" todir="build/codeCoverage/reports/junit-xml" if="testcase" />
+            <batchtest todir="build/codeCoverage/reports/junit-xml" unless="testcase">
+                <fileset dir="Test">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <junitreport todir="build/codeCoverage/reports/junit-xml">
+            <fileset dir="build/codeCoverage/reports/junit-xml">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report format="frames" todir="build/codeCoverage/reports/junit-html" />
+        </junitreport>
+
+    </target>
+
+    <target name="coverage-check">
+        <cobertura-check branchrate="34" totallinerate="100" />
+    </target>
+
+
+    <target name="coverage-report">
+        <cobertura-report srcdir="src" destdir="build/codeCoverage/coverage/cobertura-xml" format="xml" />
+    </target>
+
+    <target name="summary-coverage-report">
+        <cobertura-report srcdir="src" destdir="build/codeCoverage/coverage/cobertura-summary-xml" format="summaryXml" />
+    </target>
+
+    <target name="alternate-coverage-report">
+        <cobertura-report destdir="build/codeCoverage/coverage/cobertura-html">
+            <fileset dir="src">
+                <include name="**/*.java"/>
+            </fileset>
+        </cobertura-report>
+    </target>
+
+
+
+    <target name="createJar" depends="test">
+        <mkdir dir="build/dist"/>
+        <mkdir dir="build/dist/lib"/>
+        <jar destfile="build/dist/lib/expression-evaluator.jar" basedir="build/classes/src"/>
+    </target>
+
+
+    <target name="createDocumentation">
+        <mkdir dir="build/dist/docs"/>
+        <javadoc packageNames="prateekj.unixtools.*"
+                 sourcepath="src" destdir="build/dist/docs" windowtitle="UNIX TOOLS API"/>
+    </target>
+
+    <target name="createZip" depends="createJar">
+        <mkdir dir="build/dist/bin"/>
+        <copy todir="build/dist/bin">
+            <fileset dir="Shells" excludes="Shells/*.sh"/>
+        </copy>
+        <copy todir="build/dist" file="README.md"/>
+        <zip destfile="expression-evaluator.zip" basedir="build/dist"/>
+    </target>
+    <target name="coverage" depends="compile,compileTest,instrument,test,coverage-report,summary-coverage-report,alternate-coverage-report"/>
+</project>
