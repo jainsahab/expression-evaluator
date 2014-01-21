@@ -9,16 +9,44 @@ import static org.junit.Assert.assertEquals;
  */
 public class EvaluatorTest {
     @Test
-    public void test_should_return_Four_for_the_sum_of_one_and_three() throws Exception {
+    public void evaluator_should_return_Four_for_the_sum_of_one_and_three() throws Exception {
         Evaluator evaluator = new Evaluator();
         double expected = 4;
         assertEquals(expected,evaluator.getEvaluated("1 + 3"),0.0000);
     }
 
     @Test
-    public void test_should_return_Four_point_Five_for_the_sum_of_two_point_two_and_two_point_three() throws Exception {
+    public void evaluator_should_return_Four_point_Five_for_the_sum_of_two_point_two_and_two_point_three() throws Exception {
         Evaluator evaluator = new Evaluator();
         double expected = 4.5;
         assertEquals(expected,evaluator.getEvaluated("2.2 + 2.3"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_three_for_subtraction_of_seven_and_four() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("7 - 4"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_twelve_for_multiplication_of_three_and_four() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 12;
+        assertEquals(expected,evaluator.getEvaluated("3 * 4"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_four_for_division_of_twelve_by_three() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 4;
+        assertEquals(expected,evaluator.getEvaluated("12 / 3"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_eight_for_two_raise_to_power_three() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 8;
+        assertEquals(expected,evaluator.getEvaluated("2 ^ 3"),0.0000);
     }
 }
