@@ -49,4 +49,46 @@ public class EvaluatorTest {
         double expected = 8;
         assertEquals(expected,evaluator.getEvaluated("2 ^ 3"),0.0000);
     }
+
+    @Test
+    public void isOperator_should_return_true_as_plus_is_a_Operator() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        boolean expected = true;
+        assertEquals(expected,evaluator.isOperator("+"));
+    }
+
+    @Test
+    public void isOperator_should_return_false_as_One_is_not_Operator() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        boolean expected = true;
+        assertEquals(expected,evaluator.isOperator("+"));
+    }
+
+    @Test
+    public void evaluator_should_return_five_for_three_plus_four_minus_two() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 5;
+        assertEquals(expected,evaluator.getEvaluated("3 + 4 - 2"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_17_for_addition_of_4_2_6_5() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 17;
+        assertEquals(expected,evaluator.getEvaluated("4 + 2 + 6 + 5"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_48_for_multiplication_of_3_4_4() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 48;
+        assertEquals(expected,evaluator.getEvaluated("3 * 4 * 4"),0.0000);
+    }
+
+    @Test
+    public void evaluator_should_return_5_for_division_of_30_3_2() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 5;
+        assertEquals(expected,evaluator.getEvaluated("30 / 3 / 2"),0.0000);
+    }
 }
