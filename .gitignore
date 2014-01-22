@@ -8,3 +8,4 @@
 Build/
 *.ser
 expression-evaluator.zip
+temp/
