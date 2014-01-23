@@ -119,4 +119,25 @@ public class EvaluatorTest {
         double expected = 40;
         assertEquals(expected,evaluator.getEvaluated("2 + (3 + 5) + (4 * 6) + (24 / 4)"),0.0000);
     }
+
+    @Test
+    public void test_to_evaluate_two_nested_brackets() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 11;
+        assertEquals(expected,evaluator.getEvaluated("2 + (3 * (1 + 2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_two_parallel_and_nested_brackets_between_them() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 13;
+        assertEquals(expected,evaluator.getEvaluated("2 + (3 * (1 + 2)) + (4 / (4 / 2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_one_nested_brackets_() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 6.25;
+        assertEquals(expected,evaluator.getEvaluated("1.5 + (2.5 + (1.5 * 1.5))"),0.0000);
+    }
 }

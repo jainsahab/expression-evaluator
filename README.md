@@ -20,9 +20,21 @@ That's it, Now you are ready to run these commands
 
 `run.sh "2 + 3"`
 
+#### VERSION 0.6 (SUPPORTING TYPE INDEPENDENCY AND NESTED BRACKETS )
+
+    Expression-Evaluator will accept a string expression which would have space between operands and operators .
+    It can have any operator i.e. "+ - * / ^"
+    It may have Brackets.
+
+
+    SAMPLE: "1.5 + (2.5 + (1.5 * 1.5))" = 6.25
+            "2 + (3 * (1 + 2)) + (4 / (4 / 2))" = 13
+
+
+
 #### VERSION 0.5 (SUPPORTING PARALLEL BRACKETS)
 
-    Our Program will accept a string expression which would have space between operands and operators .
+    Expression-Evaluator will accept a string expression which would have space between operands and operators .
     It can have any operator i.e. "+ - * / ^"
     It may have Brackets.
     It should not contain decimal point numbers, only integers are allowed.
@@ -34,7 +46,7 @@ That's it, Now you are ready to run these commands
 
 #### VERSION 0.4 (PERFORM EVERY OPERATION WITH NEGATIVE INTEGERS TOO)
 
-    Our Program will accept a string expression which would have  space between operands and operators .
+    Expression-Evaluator will accept a string expression which would have  space between operands and operators .
     It can have any operator i.e. "+ - * / ^"
     It should not have Brackets.
     It should not contain decimal point numbers, only integers are allowed.
@@ -46,7 +58,7 @@ That's it, Now you are ready to run these commands
 
 #### VERSION 0.3 (PERFORM EVERY OPERATION WITH ANY NUMBER OF OPERANDS)
 
-    Our Program will accept a string expression which would have  space between operands and operators .
+    Expression-Evaluator will accept a string expression which would have  space between operands and operators .
     It can have any operator i.e. "+ - * / ^"
     It should not have Brackets.
     It should not contain negative numbers.
@@ -60,7 +72,7 @@ That's it, Now you are ready to run these commands
 
 #### VERSION 0.2 (PERFORM EVERY OPERATION BUT WITH TWO OPERANDS ONLY)
 
-    Our Program will accept a string expression which would have  space between operands and operators .
+    Expression-Evaluator will accept a string expression which would have  space between operands and operators .
     It can have any operator i.e. "+ - * / ^"
     It should not have Brackets.
     It should not contain negative numbers.

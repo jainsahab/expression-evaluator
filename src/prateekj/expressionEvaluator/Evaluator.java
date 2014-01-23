@@ -96,8 +96,8 @@ public class Evaluator {
         Map<Character, Operation> methodMap = createMap();
         if(!expression.contains("("))
             return expression;
-        int openBracketIndex= expression.indexOf("(");
-        int closeBracketIndex = expression.indexOf(")");
+        int openBracketIndex= expression.lastIndexOf("(");
+        int closeBracketIndex = expression.indexOf(")",openBracketIndex);
         String innerExpression = expression.substring(openBracketIndex+1,closeBracketIndex);
         Stack operands = getOperands(innerExpression);
         Stack<Character> operators = getOperators(innerExpression);
