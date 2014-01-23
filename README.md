@@ -20,6 +20,18 @@ That's it, Now you are ready to run these commands
 
 `run.sh "2 + 3"`
 
+#### VERSION 0.5 (SUPPORTING PARALLEL BRACKETS)
+
+    Our Program will accept a string expression which would have space between operands and operators .
+    It can have any operator i.e. "+ - * / ^"
+    It may have Brackets.
+    It should not contain decimal point numbers, only integers are allowed.
+
+
+    SAMPLE: "2 + (3 + 5)" = 10
+            "2 + (3 + 5) + (4 * 6)" = 34
+
+
 #### VERSION 0.4 (PERFORM EVERY OPERATION WITH NEGATIVE INTEGERS TOO)
 
     Our Program will accept a string expression which would have  space between operands and operators .
