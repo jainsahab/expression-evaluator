@@ -1,4 +1,4 @@
-<project default = "createZip">
+<project default = "dist">
 
     <property name="src.dir" value="D:/projects/expression-evaluator/src"/>
     <property name="cobertura.dir" value="./dependencies\cobertura-2.0.1" />
@@ -124,7 +124,7 @@
                  sourcepath="src" destdir="build/dist/docs" windowtitle="UNIX TOOLS API"/>
     </target>
 
-    <target name="createZip" depends="createJar">
+    <target name="dist" depends="createJar">
         <mkdir dir="build/dist/bin"/>
         <copy todir="build/dist/bin">
             <fileset dir="Shells" excludes="Shells/*.sh"/>

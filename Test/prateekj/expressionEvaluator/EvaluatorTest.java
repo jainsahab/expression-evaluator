@@ -91,4 +91,32 @@ public class EvaluatorTest {
         double expected = 5;
         assertEquals(expected,evaluator.getEvaluated("30 / 3 / 2"),0.0000);
     }
+
+    @Test
+    public void test_to_evaluate_simple_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "2 + 8.0";
+        assertEquals(expected,evaluator.evaluateBracket("2 + (3 + 5)"));
+    }
+
+    @Test
+    public void test_to_evaluate_single_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 10;
+        assertEquals(expected,evaluator.getEvaluated("2 + (3 + 5)"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_two_parallel_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 34;
+        assertEquals(expected,evaluator.getEvaluated("2 + (3 + 5) + (4 * 6)"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_three_parallel_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 40;
+        assertEquals(expected,evaluator.getEvaluated("2 + (3 + 5) + (4 * 6) + (24 / 4)"),0.0000);
+    }
 }
