@@ -84,6 +84,7 @@ public class Evaluator {
 
     public double getEvaluated(String expression){
         Map<Character, Operation> methodMap = createMap();
+        expression = makeStandardForm(expression);
         if(expression.contains("("))
             expression = evaluateBracket(expression);
         Stack operands = getOperands(expression);
@@ -92,12 +93,29 @@ public class Evaluator {
         return result;
     }
 
+    String makeStandardForm(String expression) {
+        StringBuilder result = new StringBuilder();
+        expression = expression.replace("+"," + ")
+                               .replaceAll("-\\("," - (")
+                               .replace("*"," * ")
+                               .replace("/"," / ")
+                               .replace("^"," ^ ");
+        String[] temp = expression.split(" ");
+        for (String s : temp) {
+            if(!s.equals(""))
+                result.append(s);
+            if(!s.equals("(") && !s.equals(""))
+                result.append(" ");
+        }
+        return result.toString().substring(0,result.length()-1);
+    }
+
     public String evaluateBracket(String expression) {
         Map<Character, Operation> methodMap = createMap();
         if(!expression.contains("("))
             return expression;
         int openBracketIndex= expression.lastIndexOf("(");
-        int closeBracketIndex = expression.indexOf(")",openBracketIndex);
+        int closeBracketIndex = expression.indexOf(")", openBracketIndex);
         String innerExpression = expression.substring(openBracketIndex+1,closeBracketIndex);
         Stack operands = getOperands(innerExpression);
         Stack<Character> operators = getOperators(innerExpression);

@@ -140,4 +140,112 @@ public class EvaluatorTest {
         double expected = 6.25;
         assertEquals(expected,evaluator.getEvaluated("1.5 + (2.5 + (1.5 * 1.5))"),0.0000);
     }
+
+
+    @Test
+    public void createSpace() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "4 + 3";
+        assertEquals(expected,evaluator.makeStandardForm("4+3"));
+    }
+
+    @Test
+    public void createSpace2() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "43 + 3";
+        assertEquals(expected,evaluator.makeStandardForm("43 +3"));
+    }
+
+    @Test
+    public void createSpace3() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "4 + (3 + 2)";
+        assertEquals(expected,evaluator.makeStandardForm("4+(3+2)"));
+    }
+
+    @Test
+    public void createSpace4() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "5 + (6 + 2)";
+        assertEquals(expected,evaluator.makeStandardForm("5 + (6+2)"));
+    }
+
+    @Test
+    public void createSpace5() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "56 + 2 + (6 + 2)";
+        assertEquals(expected,evaluator.makeStandardForm("56+2+ (6+2)"));
+    }
+
+    @Test
+    public void createSpace6() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "(1 + (2))";
+        assertEquals(expected,evaluator.makeStandardForm("(1   +(     2))"));
+    }
+
+    @Test
+    public void createSpace7() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "(-1 + (2))";
+        assertEquals(expected,evaluator.makeStandardForm("(-1   +(2))"));
+    }
+
+    @Test
+    public void createSpace8() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        String expected = "(-1 - (2))";
+        assertEquals(expected,evaluator.makeStandardForm("(-1   -(2))"));
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_no_space_() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("1+2"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_no_space_and_a_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("(1+2)"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_unnecessary_spaces_and_a_nested_bracket() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("(1   +(2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_unnecessary_spaces_and_nested_bracket_and_space_inside_it() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("(1   +(     2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_unnecessary_spaces_with_minus_option() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -3;
+        assertEquals(expected,evaluator.getEvaluated("(-1   -(     2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_unnecessary_brackets() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 20;
+        assertEquals(expected,evaluator.getEvaluated("(((((((20)))))))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_unnecessary_brackets_and_minus_option() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -19;
+        assertEquals(expected,evaluator.getEvaluated("(((1-((((20)))))))"),0.0000);
+    }
+
+
 }
