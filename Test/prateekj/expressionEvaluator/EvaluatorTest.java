@@ -230,7 +230,7 @@ public class EvaluatorTest {
     public void test_to_evaluate_expression_with_unnecessary_spaces_with_minus_option() throws Exception {
         Evaluator evaluator = new Evaluator();
         double expected = -3;
-        assertEquals(expected,evaluator.getEvaluated("(-1   -(     2))"),0.0000);
+        assertEquals(expected,evaluator.getEvaluated("(-1   -(2))"),0.0000);
     }
 
     @Test
@@ -247,5 +247,32 @@ public class EvaluatorTest {
         assertEquals(expected,evaluator.getEvaluated("(((1-((((20)))))))"),0.0000);
     }
 
+    @Test
+    public void test_to_evaluate_expression_with_nested_brackets_and_minus_option() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 13;
+        assertEquals(expected,evaluator.getEvaluated("2+(3*(1+2))+(4/(4-2))"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_with_consecutive_signs() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -1;
+        assertEquals(expected,evaluator.getEvaluated("1.5+-2.5"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_without_giving_symbol() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 7;
+        assertEquals(expected,evaluator.getEvaluated("1(3+4)"),0.0000);
+    }
+
+    @Test
+    public void test_to_evaluate_expression_without_giving_symbol_2() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 49;
+        assertEquals(expected,evaluator.getEvaluated("(3+4)(6+1)"),0.0000);
+    }
 
 }

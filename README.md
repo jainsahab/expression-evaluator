@@ -20,6 +20,18 @@ That's it, Now you are ready to run these commands
 
 `run.sh "2 + 3"`
 
+#### VERSION 0.7 (EVALUATE A MATHEMATICAL EXPRESSION)
+
+    Expression-Evaluator will accept a string expression .
+    It can have any operator i.e. "+ - * / ^"
+    It may have Brackets.
+
+
+    SAMPLE: "1.5+(2.5+(1.5*1.5))" = 6.25
+            "2+(3*(1+2))+(4/(4/2))" = 13
+
+
+
 #### VERSION 0.6 (SUPPORTING TYPE INDEPENDENCY AND NESTED BRACKETS )
 
     Expression-Evaluator will accept a string expression which would have space between operands and operators .

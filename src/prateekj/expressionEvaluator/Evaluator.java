@@ -94,12 +94,23 @@ public class Evaluator {
     }
 
     String makeStandardForm(String expression) {
+        Boolean consecutive = isConsecutive(expression);
         StringBuilder result = new StringBuilder();
-        expression = expression.replace("+"," + ")
-                               .replaceAll("-\\("," - (")
-                               .replace("*"," * ")
-                               .replace("/"," / ")
-                               .replace("^"," ^ ");
+        expression = expression.replaceAll("\\+"," + ")
+                               .replaceAll("-", " - ")
+                               .replaceAll("\\*", " * ")
+                               .replaceAll("/", " / ")
+                               .replaceAll("\\^", " ^ ")
+                               .replaceAll("\\(", "(")
+                               .replaceAll("\\)", ")")
+                               .replaceFirst("^ - ", "-")
+                               .replaceFirst("^\\( - ", "(-")
+                               .replaceAll("\\) *\\(",") * (");
+
+        if(consecutive)
+            expression = expression.replaceAll("  - ", " -");
+        if(expression.matches(".*[0-9]\\(.*"))
+            expression = expression.replaceAll("\\("," * (");
         String[] temp = expression.split(" ");
         for (String s : temp) {
             if(!s.equals(""))
@@ -108,6 +119,16 @@ public class Evaluator {
                 result.append(" ");
         }
         return result.toString().substring(0,result.length()-1);
+    }
+
+    private boolean isConsecutive(String expression) {
+        boolean result = false;
+        for (int i = 0 ; i < expression.length()-2 ; i++){
+            result = isOperator(String.valueOf(expression.charAt(i))) && isOperator(String.valueOf(expression.charAt(i+1)));
+            if(result)
+                return result;
+        }
+        return  result;
     }
 
     public String evaluateBracket(String expression) {
