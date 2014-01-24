@@ -59,7 +59,13 @@ public class Evaluator {
         while(operands.size() != 1){
             Double Operand1 = (Double) operands.pop();
             Double Operand2 = (Double) operands.pop();
-            Character operator = (Character) operators.pop();
+            Character operator;
+            try {
+                operator = (Character) operators.pop();
+            }
+            catch (EmptyStackException e){
+                operator = '+';
+            }
             result = methodMap.get(operator).operation(Operand1, Operand2);
             operands.push(result);
         }
@@ -71,6 +77,8 @@ public class Evaluator {
         Stack operands = new Stack();
         String[] expressionParts = expression.split(" ");
         for (int index=expressionParts.length-1 ; index >= 0 ; index--) {
+            if(expressionParts[index].equals(""))
+                continue;
             if(!isOperator(expressionParts[index]))
                 operands.push(Double.parseDouble(expressionParts[index]));
         }
@@ -81,6 +89,8 @@ public class Evaluator {
         Stack<Character> operators = new Stack<Character>();
         String[] expressionParts = expression.split(" ");
         for (int index=expressionParts.length-1 ; index >= 0 ; index--) {
+            if(expressionParts[index].equals(""))
+                continue;
             if(isOperator(expressionParts[index]))
                 operators.push(expressionParts[index].charAt(0));
         }
@@ -88,6 +98,8 @@ public class Evaluator {
     }
 
     public double getEvaluated(String expression){
+        if(expression.matches(".*['+','-','*','/','^']$"))
+            throw new IllegalArgumentException();
         Map<Character, Operation> methodMap = createMap();
         expression = makeStandardForm(expression);
         if(expression.contains("("))
@@ -101,13 +113,13 @@ public class Evaluator {
     String makeStandardForm(String expression) {
         Boolean consecutive = isConsecutive(expression);
         StringBuilder result = new StringBuilder();
-        expression = expression.replaceAll("\\+"," + ")
+        expression = expression.replaceAll("\\+", " + ")
+                               .replaceAll("--","+")
                                .replaceAll("-", " - ")
                                .replaceAll("\\*", " * ")
                                .replaceAll("/", " / ")
                                .replaceAll("\\^", " ^ ")
                                .replaceFirst("^ - ", "-")
-//                               .replaceAll()
                                .replaceFirst("^\\( - ", "(-")
                                .replaceAll("\\) *\\(",") * (");
 
@@ -119,7 +131,7 @@ public class Evaluator {
         for (String s : temp) {
             if(!s.equals(""))
                 result.append(s);
-            if(!s.equals("(") && !s.equals(""))
+            if(!s.equals("(") && !s.equals("-") && !s.equals(""))
                 result.append(" ");
         }
         return result.toString().substring(0,result.length()-1);

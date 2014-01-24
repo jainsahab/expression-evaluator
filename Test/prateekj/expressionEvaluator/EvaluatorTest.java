@@ -194,7 +194,7 @@ public class EvaluatorTest {
     @Test
     public void createSpace8() throws Exception {
         Evaluator evaluator = new Evaluator();
-        String expected = "(-1 - (2))";
+        String expected = "(-1 -(2))";
         assertEquals(expected,evaluator.makeStandardForm("(-1   -(2))"));
     }
 
@@ -282,4 +282,31 @@ public class EvaluatorTest {
         assertEquals(expected,evaluator.getEvaluated("23+(-2)"),0.0000);
     }
 
+    @Test
+    public void some_specific_test_cases() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 0.125;
+        assertEquals(expected,evaluator.getEvaluated("(2 ^ -3)"),0.0000);
+    }
+
+    @Test
+    public void some_specific_test_cases_2() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -1;
+        assertEquals(expected,evaluator.getEvaluated("((-1))"),0.0000);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void some_specific_test_cases_3() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -1;
+        assertEquals(expected,evaluator.getEvaluated("22+"),0.0000);
+    }
+
+    @Test
+    public void some_specific_test_cases_4() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 1.5;
+        assertEquals(expected,evaluator.getEvaluated("1.25 -- 0.25"),0.0000);
+    }
 }
