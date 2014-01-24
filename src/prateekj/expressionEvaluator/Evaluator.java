@@ -97,55 +97,43 @@ public class Evaluator {
         return operators;
     }
 
-    public double getEvaluated(String expression){
-        if(expression.matches(".*['+','-','*','/','^']$"))
-            throw new IllegalArgumentException();
-        Map<Character, Operation> methodMap = createMap();
-        expression = makeStandardForm(expression);
-        if(expression.contains("("))
-            expression = evaluateBracket(expression);
-        Stack operands = getOperands(expression);
-        Stack<Character> operators = getOperators(expression);
-        Double result = evaluateExpression(operands,operators,methodMap);
-        return result;
-    }
-
     String makeStandardForm(String expression) {
-        Boolean consecutive = isConsecutive(expression);
         StringBuilder result = new StringBuilder();
         expression = expression.replaceAll("\\+", " + ")
-                               .replaceAll("--","+")
-                               .replaceAll("-", " - ")
-                               .replaceAll("\\*", " * ")
-                               .replaceAll("/", " / ")
-                               .replaceAll("\\^", " ^ ")
-                               .replaceFirst("^ - ", "-")
-                               .replaceFirst("^\\( - ", "(-")
-                               .replaceAll("\\) *\\(",") * (");
-
-        if(consecutive)
-            expression = expression.replaceAll("  - ", " -");
+                                .replaceAll("-", " - ")
+                                .replaceAll("\\*", " * ")
+                                .replaceAll("/", " / ")
+                                .replaceAll("\\^", " ^ ")
+                                .replaceAll("-  - +", "- -")
+                                .replaceAll("\\) *\\(", ") * (");
         if(expression.matches(".*[0-9]\\(.*"))
-            expression = expression.replaceAll("\\(", " * (");
+            expression = expression.replaceAll("\\("," * (");
         String[] temp = expression.split(" ");
         for (String s : temp) {
             if(!s.equals(""))
                 result.append(s);
-            if(!s.equals("(") && !s.equals("-") && !s.equals(""))
+            if(!s.equals("(") && !s.equals("-")  && !s.equals(""))
                 result.append(" ");
         }
-        return result.toString().substring(0,result.length()-1);
+        return putOperands(result.toString().substring(0,result.length()-1).replaceAll("--","+"));
     }
 
-    private boolean isConsecutive(String expression) {
-        boolean result = false;
-        for (int i = 0 ; i < expression.length()-2 ; i++){
-            result = isOperator(String.valueOf(expression.charAt(i))) && isOperator(String.valueOf(expression.charAt(i+1)));
-            if(result)
-                return result;
+    private String putOperands(String temp) {
+        String[] parts = temp.split(" ");
+        if(parts.length == 2)
+            return  temp;
+        StringBuilder result = new StringBuilder();
+        int i;
+        for ( i = 0 ; i < parts.length-1 ; i++){
+            if(!isOperator(parts[i]) && !isOperator(parts[i+1]))
+                result.append(parts[i]+" + ");
+            else
+                result.append(parts[i]+" ");
         }
-        return  result;
+        result.append(parts[i]);
+        return result.toString();
     }
+
 
     public String evaluateBracket(String expression) {
         Map<Character, Operation> methodMap = createMap();
@@ -159,6 +147,19 @@ public class Evaluator {
         Double result = evaluateExpression(operands, operators, methodMap);
         expression = expression.replace("("+innerExpression+")", Double.toString(result));
         return (evaluateBracket(expression));
+    }
+
+    public double getEvaluated(String expression){
+        if(expression.matches(".*['+','-','*','/','^']$"))
+            throw new IllegalArgumentException();
+        Map<Character, Operation> methodMap = createMap();
+        expression = makeStandardForm(expression);
+        if(expression.contains("("))
+            expression = evaluateBracket(expression);
+        Stack operands = getOperands(expression);
+        Stack<Character> operators = getOperators(expression);
+        Double result = evaluateExpression(operands,operators,methodMap);
+        return result;
     }
 }
 

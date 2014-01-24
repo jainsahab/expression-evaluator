@@ -286,7 +286,7 @@ public class EvaluatorTest {
     public void some_specific_test_cases() throws Exception {
         Evaluator evaluator = new Evaluator();
         double expected = 0.125;
-        assertEquals(expected,evaluator.getEvaluated("(2 ^ -3)"),0.0000);
+            assertEquals(expected,evaluator.getEvaluated("(2 ^ -3)"),0.0000);
     }
 
     @Test
@@ -308,5 +308,27 @@ public class EvaluatorTest {
         Evaluator evaluator = new Evaluator();
         double expected = 1.5;
         assertEquals(expected,evaluator.getEvaluated("1.25 -- 0.25"),0.0000);
+    }
+
+
+    @Test
+    public void some_specific_test_cases_5() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 3;
+        assertEquals(expected,evaluator.getEvaluated("24-3/7"),0.0000);
+    }
+
+    @Test
+    public void some_specific_test_cases_6() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 2;
+        assertEquals(expected,evaluator.getEvaluated("1--1"),0.0000);
+    }
+
+    @Test
+    public void some_specific_test_cases_7() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = -1;
+        assertEquals(expected,evaluator.getEvaluated("1*-1"),0.0000);
     }
 }
