@@ -275,4 +275,11 @@ public class EvaluatorTest {
         assertEquals(expected,evaluator.getEvaluated("(3+4)(6+1)"),0.0000);
     }
 
+    @Test
+    public void test_to_evaluate_simple_expression() throws Exception {
+        Evaluator evaluator = new Evaluator();
+        double expected = 21;
+        assertEquals(expected,evaluator.getEvaluated("23+(-2)"),0.0000);
+    }
+
 }

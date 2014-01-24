@@ -51,11 +51,16 @@ public class Evaluator {
 
     public Double evaluateExpression(Stack operands, Stack operators,Map<Character, Operation> methodMap) {
         Double result = null;
-        while(operands.size() != 1){
-            Double Operator1 = (Double) operands.pop();
-            Double Operator2 = (Double) operands.pop();
+        if(operands.size() == 1 && operators.size()== 1){
+            Double Operand1 = (Double) operands.pop();
             Character operator = (Character) operators.pop();
-            result = methodMap.get(operator).operation(Operator1, Operator2);
+            operands.push(Double.parseDouble(operator.toString().concat(Operand1.toString())));
+        }
+        while(operands.size() != 1){
+            Double Operand1 = (Double) operands.pop();
+            Double Operand2 = (Double) operands.pop();
+            Character operator = (Character) operators.pop();
+            result = methodMap.get(operator).operation(Operand1, Operand2);
             operands.push(result);
         }
         result = (Double) operands.pop();
@@ -101,16 +106,15 @@ public class Evaluator {
                                .replaceAll("\\*", " * ")
                                .replaceAll("/", " / ")
                                .replaceAll("\\^", " ^ ")
-                               .replaceAll("\\(", "(")
-                               .replaceAll("\\)", ")")
                                .replaceFirst("^ - ", "-")
+//                               .replaceAll()
                                .replaceFirst("^\\( - ", "(-")
                                .replaceAll("\\) *\\(",") * (");
 
         if(consecutive)
             expression = expression.replaceAll("  - ", " -");
         if(expression.matches(".*[0-9]\\(.*"))
-            expression = expression.replaceAll("\\("," * (");
+            expression = expression.replaceAll("\\(", " * (");
         String[] temp = expression.split(" ");
         for (String s : temp) {
             if(!s.equals(""))
